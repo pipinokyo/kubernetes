@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: frontend
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      tier: frontend
+      app: nginx
+  template:
+    metadata:
+      labels:
+        tier: frontend
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+
+---
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: backend
+spec:
+  replicas: 4
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values:
+        - web
+        - api
+      - key: stage
+        operator: NotIn
+        values:
+        - dev
+  template:
+    metadata:
+      labels:
+        app : web
+        stage: prod
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
