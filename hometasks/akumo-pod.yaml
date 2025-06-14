@@ -1,0 +1,13 @@
+apiVersion: v1                               # specifies the API version
+kind: Pod                                    # defines the kind of resource
+metadata:                                    # metadata for the pod                      
+  name: akumo-pod                            # name of the pod
+spec:                                        # specification for the pod
+  containers:                                # list of containers in the pod  
+  - name: akumo-container                    # name of the container   
+    image: busybox                           # image to be used for the containerthe lightweight busybox Docker image.
+    args: ["/bin/sh", "-c", "sleep 5000"]    # command to be executed in the container.
+    # Runs the command sleep 5000 (keeps the container alive for 5000 seconds).
+    # /bin/sh -c interprets the command string (sleep 5000).
+    # Busybox doesn’t include /bin/bash, so we use /bin/sh.
+  restartPolicy: Never                       # restart policy for the pod.Ensures the Pod does not restart after exiting.
