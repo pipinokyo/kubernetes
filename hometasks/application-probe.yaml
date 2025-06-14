@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: application-probe
+spec:
+  containers:
+  - name: nginx
+    image: nginx:alpine
+    ports:
+    - containerPort: 5000          # The port where your app endpoints are exposed
+    livenessProbe:                 # Checks if app is still healthy
+      httpGet:
+        path: /health              # Endpoint to check health
+        port: 5000                 # Port where app listens
+      initialDelaySeconds: 15      # Wait 15s before first check
+      periodSeconds: 10            # Check every 10 seconds
+      failureThreshold: 3          # After 3 failures, restart pod
+    readinessProbe:                # Checks if app is ready for traffic
+      httpGet:
+        path: /started             # Endpoint to check readiness
+        port: 5000                 # Port where app listens
+      initialDelaySeconds: 5       # Wait 5s before first check
+      periodSeconds: 5             # Check every 5 seconds
+      failureThreshold: 1          # Immediately mark as not ready on failure
