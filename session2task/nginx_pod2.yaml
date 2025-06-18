@@ -1,15 +1,15 @@
-apiVersion: v1
-kind: Pod
-metadata:
-  name: app1-pod-1
-  namespace: app1-dev
-  labels:
-    app: app1
-    env: dev
-spec:
-  containers:
-  - name: nginx
-    image: nginx:latest
-    ports:
-    - containerPort: 80
-      protocol: TCP
+apiVersion: v1               # This line specifies the API version of the Kubernetes object.
+kind: Pod                    # This line indicates that the object is a Pod.   
+metadata:                    # Metadata for the Pod object. 
+  name: app1-pod-1           # Name of the Pod.
+  namespace: app1-dev        # Namespace where the Pod is created.
+  labels:                    # Labels for the Pod.
+    app: app1                # Label indicating the application.
+    env: dev                 # Label indicating the environment.
+spec:                        # Specification for the Pod.
+  containers:                # List of containers in the Pod.
+  - name: nginx              # Name of the container.
+    image: nginx:latest      # Docker image for the container.
+    ports:                   # Ports exposed by the container.
+    - containerPort: 80      # Port number exposed by the container.
+      protocol: TCP          # Protocol used by the port.
