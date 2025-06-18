@@ -7,6 +7,10 @@
 # ✅ Works with Deployments – Deployments use ReplicaSets internally for rolling updates.
 # ❌ ReplicaSet does not support rolling updates (must manually delete pods or create a new RS).
 # ❌ Limited to managing pods only, not other resources like services or volumes.
+# ❌ ReplicaSet only maintains a fixed replica count (must manually scale).
+# ❌ Does not support advanced features like health checks or readiness probes (use Deployments for that).
+# ❌ ReplicaSets are not intended for direct user management; they are typically managed by Deployments.
+# ❌ ReplicaSets do not support versioning or history tracking (use Deployments for
 # Note: ReplicaSets are often used indirectly through Deployments, which manage RSs for rolling updates and versioning.
 
 apiVersion: apps/v1               # The API version for the ReplicaSet  
