@@ -1,8 +1,7 @@
-
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: app1-dev
-  labels:
-    app: app1
-    env: dev
+apiVersion: v1          # This line specifies the API version of the Kubernetes object.
+kind: Namespace         # This line indicates that the object is a Namespace.
+metadata:               # Metadata for the Namespace object.  
+  name: app1-dev        # Name of the Namespace.
+  labels:               # Labels for the Namespace.  
+    app: app1           # Label indicating the application.
+    env: dev            # Label indicating the environment.
