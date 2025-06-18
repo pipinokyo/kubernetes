@@ -42,17 +42,21 @@ metadata:
 spec:
   replicas: 4
   selector:
-    matchExpressions:
-      - key: app
-        operator: In
-        values:
-        - web
-        - api
-      - key: stage
-        operator: NotIn
-        values:
-        - dev
-  template:
+    matchExpressions:             # Match pods with these labels
+      - key: tier                 # Match pods with label "tier"
+        operator: In              # Operator to match the key
+        values:                   # Values to match for the key
+        - backend                 # Value to match for the key "tier"
+      - key: app                  # Match pods with label "app"
+        operator: In              # Operator to match the key  
+        values:                   # Values to match for the key
+        - web                     # Value to match for the key "app"
+        - api                     # Value to match for the key "app"
+      - key: stage                # Match pods with label "stage"
+        operator: NotIn           # Operator to match the key
+        values:                   # Values to match for the key
+        - dev                     # Value to not match for the key "stage"
+  template:                       # Template for the pods that this RS will manage      
     metadata:
       labels:
         app : web
