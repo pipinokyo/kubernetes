@@ -65,3 +65,25 @@ spec:
       containers:
       - name: nginx
         image: nginx
+
+
+# matchExpressions Deep Dive
+# The selector.matchExpressions section defines complex rules for selecting pods. Each expression has:
+# key → The label key to match (e.g., tier, app, stage)
+# operator → How to compare the key with values (In, NotIn, Exists, etc.)
+# values → List of values to match (if applicable)
+
+# This ReplicaSet will manage pods that match ALL of these conditions:
+
+# tier: backend
+# Pod must have label tier=backend
+# operator: In means the label value must be in the specified list (["backend"])
+
+# app: web OR app: api
+# Pod must have either app=web or app=api
+# operator: In checks if the label value is in ["web", "api"]
+
+# stage is NOT dev
+# Pod must not have stage=dev
+# operator: NotIn excludes pods where stage is in ["dev"]
+# Pods with stage=prod or no stage label will match
