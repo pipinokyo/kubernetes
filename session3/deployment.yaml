@@ -1,22 +1,51 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: nginx-deployment
-  labels:
-    app: nginx
-spec:
-  replicas: 4
-  selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      containers:
-      - name: nginx
-        image: nginx:1.21
-        
-        ports:
-        - containerPort: 80
+# A Deployment is a higher-level Kubernetes object that manages ReplicaSets and provides declarative updates to applications.
+# It's the recommended way to deploy stateless applications in Kubernetes.
+
+# Key Features of Deployments
+# 1. Pod Management
+# Uses ReplicaSets under the hood to maintain desired pod count
+# Ensures specified number of pod replicas are always running
+# Self-healing capability (auto-replaces failed pods)
+
+# 2. Update Strategies
+# Rolling Update (default): Gradually replaces old pods with new ones (zero downtime)
+# Recreate: Kills all old pods before creating new ones (brief downtime)
+
+# 3. Rollback Capability
+# Maintains revision history
+# Allows rolling back to previous versions with a single command
+
+# 4. Scaling
+# Manual scaling via kubectl scale
+# Works with Horizontal Pod Autoscaler (HPA) for automatic scaling
+
+#                      Deployment      vs      ReplicaSet
+# Feature	             Deployment	             ReplicaSet
+# Rolling updates	       ✅ Yes	                ❌ No
+# Rollback	             ✅ Yes	                ❌ No
+# Revision history	     ✅ Yes	                ❌ No
+# Autoscaling	           ✅ Yes	                ❌ No
+# Common usage	         ✅ Primary	            ❌ Rare
+
+
+apiVersion: apps/v1             # The API version for the Deployment  
+kind: Deployment                # The kind of Kubernetes object, in this case, a Deployment 
+metadata:                       # Metadata about the Deployment
+  name: nginx-deployment        # Name of the Deployment
+  labels:                       # Labels for the Deployment
+    app: nginx                  # Label to identify the application
+spec:                           # Specification for the Deployment
+  replicas: 4                   # Desired number of pod replicas
+  selector:                     # Selector to identify the pods managed by this Deployment
+    matchLabels:                # Match pods with these labels
+      app: nginx                # Label selector to match pods with label "app: nginx"
+  template:                     # Template for the pods that this Deployment will manage  
+    metadata:                   # Metadata for the pod template    
+      labels:                   # Labels for the pod template
+        app: nginx              # Label to match the pods with the selector    
+    spec:                       # Specification for the pod
+      containers:               # List of containers in the pod  
+      - name: nginx             # Name of the container
+        image: nginx:1.21       # Docker image for the container
+        ports:                  # Ports exposed by the container 
+        - containerPort: 80     # Port number on which the container listens
