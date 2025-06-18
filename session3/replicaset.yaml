@@ -1,22 +1,33 @@
-apiVersion: apps/v1
-kind: ReplicaSet
-metadata:
-  name: frontend
-spec:
-  replicas: 4
-  selector:
-    matchLabels:
-      tier: frontend
-      app: nginx
-  template:
-    metadata:
-      labels:
-        tier: frontend
-        app: nginx
-    spec:
-      containers:
-      - name: nginx
-        image: nginx
+# A ReplicaSet (RS) is a Kubernetes controller that ensures a specified number of pod replicas are running at all times.
+# It is the next-generation replacement for the older ReplicationController (RC) with more advanced features.
+
+# ✅ Maintains Desired Pod Count – Automatically creates or deletes pods to match the replica count.
+# ✅ Self-Healing – Restarts failed or deleted pods.
+# ✅ Flexible Pod Selection – Uses label selectors (including advanced matchExpressions).
+# ✅ Works with Deployments – Deployments use ReplicaSets internally for rolling updates.
+# ❌ ReplicaSet does not support rolling updates (must manually delete pods or create a new RS).
+# ❌ Limited to managing pods only, not other resources like services or volumes.
+# Note: ReplicaSets are often used indirectly through Deployments, which manage RSs for rolling updates and versioning.
+
+apiVersion: apps/v1               # The API version for the ReplicaSet  
+kind: ReplicaSet                  # The kind of Kubernetes object, in this case, a ReplicaSet
+metadata:                         # Metadata about the ReplicaSet 
+  name: frontend                  # Name of the ReplicaSet
+spec:                             # Specification for the ReplicaSet
+  replicas: 4                     # Desired number of pod replicas
+  selector:                       # Selector to identify the pods managed by this RS
+    matchLabels:                  # Match pods with these labels
+      tier: frontend              # Label selector to match pods with label "tier: frontend" 
+      app: nginx                  # Label selector to match pods with label "app: nginx"
+  template:                       # Template for the pods that this RS will manage
+    metadata:                     # Metadata for the pod template
+      labels:                     # Labels for the pod template 
+        tier: frontend            # Label to match the pods with the selector 
+        app: nginx                # Label to match the pods with the selector
+    spec:                         # Specification for the pod
+      containers:                 # List of containers in the pod  
+      - name: nginx               # Name of the container
+        image: nginx              # Docker image for the container
 
 ---
 
