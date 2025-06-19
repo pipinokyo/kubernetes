@@ -1,18 +1,45 @@
-apiVersion: apps/v1
-kind: DaemonSet
-metadata:
-  name: fluentd-elasticsearch
-  labels:
-    k8s-app: fluentd-logging
-spec:
-  selector:
-    matchLabels:
-      name: fluentd-elasticsearch
-  template:
-    metadata:
-      labels:
-        name: fluentd-elasticsearch
-    spec:
-      containers:
-      - name: fluentd-elasticsearch
-        image: quay.io/fluentd_elasticsearch/fluentd:v2.5.2
+# A DaemonSet is a Kubernetes controller that ensures a copy of a pod runs on all (or some) nodes in a cluster. Unlike Deployments which scale by replica count, DaemonSets scale automatically as nodes are added/removed from the cluster.
+
+# Key Characteristics of DaemonSets
+# 1. Node-Centric Scheduling
+# Runs one pod per node automatically
+# New pods are added when new nodes join the cluster
+# Pods are removed when nodes are removed
+
+# 2. Typical Use Cases
+# Cluster-wide services:
+# Log collectors (Fluentd, Logstash)
+# Monitoring agents (Prometheus Node Exporter)
+# Storage daemons (glusterd, ceph)
+# Networking components (CNI plugins, kube-proxy)
+
+# Node-specific utilities:
+# Security scanners
+# Hardware monitors
+# Antivirus software
+
+# 3. Key Features
+# Automatic scaling with cluster nodes
+# Can target specific nodes using nodeSelectors/affinity
+# Rolling update support (like Deployments)
+# Tolerations for running on tainted nodes
+
+
+apiVersion: apps/v1                              # The API version for the DaemonSet
+kind: DaemonSet                                  # The kind of Kubernetes object, in this case, a DaemonSet                
+metadata:                                        # Metadata about the DaemonSet 
+  name: fluentd-elasticsearch                    # Name of the DaemonSet        
+  labels:                                        # Labels for the DaemonSet     
+    k8s-app: fluentd-logging                     # Label to identify the application
+spec:                                            # Specification for the DaemonSet
+  selector:                                      # Selector to identify the pods managed by this DaemonSet                    
+    matchLabels:                                 # Match pods with these labels            
+      name: fluentd-elasticsearch                # Label selector to match pods with label "name: fluentd-elasticsearch"
+  template:                                      # Template for the pods that this DaemonSet will manage                
+    metadata:                                    # Metadata for the pod template
+      labels:                                    # Labels for the pod template
+        name: fluentd-elasticsearch              # Label to match the pods with the selector
+    spec:                                        # Specification for the pod                    
+      containers:                                # List of containers in the pod
+      - name: fluentd-elasticsearch              # Name of the container 
+        image: quay.io/fluentd_elasticsearch/fluentd:v2.5.2 # Docker image for the container
