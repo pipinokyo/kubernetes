@@ -14,7 +14,8 @@
 # ❌ Not for load balancing (use ClusterIP + Endpoints instead)
 # ❌ No traffic control (can't add retries, timeouts, etc.)
 
-
+# this file defines a Kubernetes Service of type ExternalName for an external service.
+# It specifies the external name that the service will resolve to, allowing pods to access it using a stable DNS name.
 apiVersion: v1
 kind: Service
 metadata:
