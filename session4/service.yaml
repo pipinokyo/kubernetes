@@ -1,11 +1,11 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: simple-service
-spec:
-  selector:
-    app: nginx
-  ports:
-    - protocol: TCP
-      port: 80
-      targetPort: 80
+apiVersion: v1                      # This line specifies the API version of the Kubernetes object.
+kind: Service                       # This line indicates that the object is a Service.   
+metadata:                           # This line begins the metadata section for the Service.
+  name: simple-service              # This line sets the name of the Service.  
+spec:                               # This line begins the specification for the Service. 
+  selector:                         # This line defines the selector for the Service, which matches the pods it will route traffic to.
+    app: nginx                      # This line defines the selector to match the pods with the label 'app: nginx'.   
+  ports:                            # This line begins the ports section, which defines the ports that the Service will expose.
+    - protocol: TCP                 # This line specifies the protocol used by the Service. 
+      port: 80                      # This line defines the port that the Service will expose.
+      targetPort: 80                # This line specifies the port on the pod that the Service will forward traffic to.
