@@ -1,3 +1,7 @@
+# ✅ Internal communication between microservices
+# ✅ Load balancing across multiple Pods
+# ✅ Abstracting Pod IPs (DNS name stays stable even if Pods restart)
+
 apiVersion: v1                      # This line specifies the API version of the Kubernetes object.
 kind: Service                       # This line indicates that the object is a Service.   
 metadata:                           # This line begins the metadata section for the Service.
