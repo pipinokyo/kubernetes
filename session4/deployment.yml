@@ -1,3 +1,7 @@
+# this file defines a Kubernetes deployment for an Nginx application
+# It specifies the number of replicas, the selector for matching pods, and the container image to use.
+# It also defines the port that the container will listen on.
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
