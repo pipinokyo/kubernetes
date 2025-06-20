@@ -1,19 +1,23 @@
-apiVersion: batch/v1
-kind: CronJob
-metadata:
-  name: hello
-spec:
-  schedule: "* * * * *"
-  jobTemplate:
-    spec:
-      template:
-        spec:
-          containers:
-          - name: hello
-            image: busybox:1.28
-            imagePullPolicy: IfNotPresent
-            command:
-            - /bin/sh
-            - -c
-            - date; echo Hello from the Kubernetes cluster
-          restartPolicy: OnFailure
+# This file defines a Kubernetes CronJob that runs every minute.
+# CronJobs are used to run jobs on a scheduled basis, similar to cron jobs in Unix/Linux.
+
+
+apiVersion: batch/v1                                        # The API version for the CronJob
+kind: CronJob                                               # The kind of Kubernetes object, in this case, a CronJob   
+metadata:                                                   # Metadata for the CronJob
+  name: hello                                               # Name of the CronJob
+spec:                                                       # Specification for the CronJob
+  schedule: "* * * * *"                                     # The schedule for the CronJob, in this case, every minute 
+  jobTemplate:                                              # Template for the job that will be created by the CronJob                      
+    spec:                                                   # Specification for the job                  
+      template:                                             # Template for the pod that will run the job            
+        spec:                                               # Specification for the pod          
+          containers:                                       # List of containers in the pod       
+          - name: hello                                     # Name of the container                  
+            image: busybox:1.28                             # The Docker image to use for the container        
+            imagePullPolicy: IfNotPresent                   # Policy for pulling the image, in this case, pull if not present
+            command:                                        # Command to run in the container        
+            - /bin/sh                                       # Use the shell to run the command
+            - -c                                            # Use the -c option to pass a command string
+            - date; echo Hello from the Kubernetes cluster  # Print the current date and a message
+          restartPolicy: OnFailure                          # Restart policy for the pod, in this case, restart on failure
