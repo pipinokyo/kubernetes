@@ -1,4 +1,8 @@
-apiVersion: batch/v1
+# This YAML file defines a Kubernetes Job that calculates the value of pi to 2000 decimal places using Perl.
+# job is a one-time task that runs to completion, unlike Deployments or ReplicaSets which manage long-running applications.
+
+
+apiVersion: batch/v1        
 kind: Job
 metadata:
   name: pi
