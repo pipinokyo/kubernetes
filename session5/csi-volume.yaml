@@ -1,3 +1,11 @@
+# This file defines a PersistentVolumeClaim for a CSI (Container Storage Interface) volume in Kubernetes.
+# The claim is named "app-volume-claim-csi" and requests a storage capacity of 25Gi.
+# It uses the "do-block-storage" storage class, which is typically used for DigitalOcean block storage.
+# The access mode is set to ReadWriteOnce, meaning the volume can be mounted as read-write by a single node.
+# This claim can be used by pods to request storage from a Persistent Volume that matches the specified storage class and access mode.
+# The claim ensures that the application has the necessary storage resources available for its operation.
+# The PersistentVolumeClaim will bind to a PersistentVolume that matches the requested storage class and access mode.
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
