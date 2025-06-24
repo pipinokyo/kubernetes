@@ -1,3 +1,11 @@
+# This file defines a Persistent Volume (PV) for a Kubernetes cluster.
+# The PV is named "app-volume" and uses a hostPath to store data on the host node's filesystem.
+# It has a storage capacity of 10Gi and allows read/write access by a single node (ReadWriteOnce).
+# The storage class is set to "manual", indicating that it is not dynamically provisioned by Kubernetes.
+# This PV can be used by pods to store persistent data that needs to survive pod restarts or rescheduling.
+# The hostPath is set to "/mnt/data", which is a directory on the host node where the data will be stored.
+
+
 apiVersion: v1
 kind: PersistentVolume
 metadata:
