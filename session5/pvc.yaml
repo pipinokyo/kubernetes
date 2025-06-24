@@ -1,3 +1,11 @@
+# This file defines a PersistentVolumeClaim for an application.
+# The claim is named "app-volume-claim" and requests a storage capacity of 3Gi.
+# It uses the "manual" storage class and allows read/write access by a single node (ReadWriteOnce).
+# This claim can be used by pods to request storage from the Persistent Volume defined in pv.yaml.
+# The claim ensures that the application has the necessary storage resources available for its operation.
+## The PersistentVolumeClaim will bind to the PersistentVolume named "app-volume" if it matches the requested storage class and access mode.
+
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
