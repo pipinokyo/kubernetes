@@ -1,23 +1,48 @@
-apiVersion: v1
-kind: Pod
-metadata:
-  name: emptydir-volume-pod
-spec:
-  containers:
-  - image: luksa/fortune
-    name: html-generator
-    volumeMounts:
-    - name: html
-      mountPath: /var/htdocs
-  - image: nginx:alpine
-    name: web-server
-    volumeMounts:
-    - name: html
-      mountPath: /usr/share/nginx/html
-      readOnly: true
-    ports:
-    - containerPort: 80
-      protocol: TCP
-  volumes:
-  - name: html
-    emptyDir: {}
+# The emptyDir volume in Kubernetes is a simple, temporary storage volume that is created when
+#  a pod is assigned to a node and exists only for the lifetime of that pod.
+
+#                 How emptyDir Works
+# Created when a pod starts.
+# Initially empty.
+# Survives container crashes/restarts but is deleted when the pod is removed.
+# Data is stored on the node’s filesystem (default) or in memory (tmpfs).
+
+# When to Use emptyDir?
+# ✅ Cache files (e.g., downloaded assets, intermediate processing data).
+# ✅ Temporary logs (before uploading to a permanent storage).
+# ✅ Shared workspace between containers in the same pod.
+# ❌ Not for persistent data (use PersistentVolume instead).
+
+# Example: Pod with emptyDir Volume
+# This example demonstrates a pod with two containers:
+# 1. `html-generator`: Generates HTML files and writes them to the emptyDir volume
+# 2. `web-server`: Nginx server that serves the HTML files from the emptyDir volume
+# The emptyDir volume is mounted in both containers, allowing them to share data.
+# The `html-generator` container generates HTML content and writes it to the shared volume,
+# while the `web-server` container serves that content over HTTP.
+# The volume is defined in the pod specification and is of type `emptyDir`, which means
+# it will be created when the pod starts and deleted when the pod is removed.
+
+apiVersion: v1                             # API version for the Kubernetes object
+kind: Pod                                  # Type of Kubernetes object                      
+metadata:                                  # Metadata for the pod              
+  name: emptydir-volume-pod                # Name of the pod
+spec:                                      # Specification for the pod
+  containers:                              # List of containers in the pod 
+  - image: luksa/fortune                   # Image for the fortune container
+    name: html-generator                   # Name of the container    
+    volumeMounts:                          # Volume mounts for the container
+    - name: html                           # Name of the volume to mount
+      mountPath: /var/htdocs               # Path in the container where the volume is mounted
+  - image: nginx:alpine                    # Image for the Nginx container  
+    name: web-server                       # Name of the container
+    volumeMounts:                          # Volume mounts for the container 
+    - name: html                           # Name of the volume to mount
+      mountPath: /usr/share/nginx/html     # Path in the container where the volume is mounted
+      readOnly: true                       # Mount the volume as read-only
+    ports:                                 # Ports exposed by the container 
+    - containerPort: 80                    # Port number for the Nginx server
+      protocol: TCP                        # Protocol used by the port
+  volumes:                                 # List of volumes for the pod 
+  - name: html                             # Name of the volume  
+    emptyDir: {}                           # Type of volume, emptyDir indicates a temporary storage volume
